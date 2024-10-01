@@ -1,13 +1,13 @@
-package com.example.picture_loader_api;
+package com.example.image_loader_api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PictureLoaderApiApplication {
+public class ImageLoaderApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PictureLoaderApiApplication.class, args);
+		SpringApplication.run(ImageLoaderApiApplication.class, args);
 	}
 
 }

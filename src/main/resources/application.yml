@@ -1,2 +1,16 @@
 server:
-  port: 8084
+  port: 8085
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/imagedb
+    username: admin
+    password: password
+    platform: postgres
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+

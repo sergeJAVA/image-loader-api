@@ -1,18 +1,20 @@
 package com.example.image_loader_api.model;
 
-import lombok.*;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.File;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document
+@Entity
+@Table(name = "images")
 public class Image {
-    private File data;
+    private String data;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long userId;
+    private String userId;
 }

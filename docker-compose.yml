@@ -1,5 +1,15 @@
-version: "3.9"
+version: '3.9'
 
 services:
-  mongodb:
-    image: 'bitnami/mongodb:latest'
+  postgres:
+    container_name: postgresImageDB
+    image: postgres:16.1
+    restart: always
+    environment:
+      POSTGRES_DB: imagedb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+
+

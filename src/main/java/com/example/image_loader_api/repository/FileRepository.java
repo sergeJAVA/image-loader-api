@@ -1,7 +1,10 @@
 package com.example.image_loader_api.repository;
 
 import com.example.image_loader_api.model.Image;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface FileRepository extends MongoRepository<Image, Long> {
+@Repository
+public interface FileRepository extends JpaRepository<Image, String> {
+
 }

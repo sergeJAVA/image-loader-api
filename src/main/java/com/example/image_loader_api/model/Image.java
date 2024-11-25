@@ -12,9 +12,9 @@ import lombok.*;
 @Entity
 @Table(name = "images")
 public class Image {
-    private String data;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String userId;
+    private String downloadPath;
 }

@@ -17,4 +17,6 @@ public class Image {
     private Long id;
     private String userId;
     private String downloadPath;
+    private String name;
+
 }

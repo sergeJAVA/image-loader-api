@@ -6,6 +6,8 @@ import com.example.image_loader_api.repository.FileRepository;
 import com.example.image_loader_api.service.ImageService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +31,7 @@ public class ImageController {
 
 
     @PostMapping("/upload")
-    public Image uploadImage(MultipartFile file, @RequestParam String userId) {
+    public Image uploadImage(@RequestBody MultipartFile file, @RequestParam String userId) {
         return imageService.uploadImage(file, userId);
     }
 
@@ -41,6 +43,5 @@ public class ImageController {
     @DeleteMapping("/delete")
     public void deleteImage(@RequestParam String key) {
         imageService.deleteImage(key);
-
     }
 }

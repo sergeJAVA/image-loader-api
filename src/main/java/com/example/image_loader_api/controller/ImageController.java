@@ -1,13 +1,10 @@
 package com.example.image_loader_api.controller;
 
-import com.example.config.BucketProperties;
 import com.example.image_loader_api.model.Image;
 import com.example.image_loader_api.repository.FileRepository;
 import com.example.image_loader_api.service.ImageService;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +27,7 @@ public class ImageController {
     }
 
 
-    @PostMapping("/upload")
+    @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Image uploadImage(@RequestBody MultipartFile file, @RequestParam String userId) {
         return imageService.uploadImage(file, userId);
     }

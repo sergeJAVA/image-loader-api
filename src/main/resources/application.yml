@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/imagedb
-    username: admin
-    password: password
+    url: jdbc:postgresql://localhost:5432/postsDB
+    username: root
+    password: pass
     platform: postgres
     driverClassName: org.postgresql.Driver
   jpa:

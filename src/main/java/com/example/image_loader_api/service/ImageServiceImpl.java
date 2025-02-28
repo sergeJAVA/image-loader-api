@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
     private final CloudService cloudService;
-
+    private final BucketProperties bucketProperties;
     private final FileRepository fileRepository;
 
 
@@ -34,7 +34,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     @Transactional
     public void deleteImage(String key) {
-        String imageURL = BucketProperties.STORAGE_PATH + key;
+        String imageURL = bucketProperties.getStoragePath() + key;
         cloudService.deleteImage(key);
         fileRepository.deleteByDownloadPath(imageURL);
     }

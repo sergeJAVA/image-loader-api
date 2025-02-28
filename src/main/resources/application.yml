@@ -14,3 +14,9 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
+bucket:
+  properties:
+    name: ""
+    access-key-id: ""
+    secret-access-key: ""
+    storage-path: "https://storage.yandexcloud.net/"

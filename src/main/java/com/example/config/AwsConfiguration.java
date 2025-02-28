@@ -4,19 +4,27 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
+@RequiredArgsConstructor
 public class AwsConfiguration {
 
-    public AmazonS3 s3Client() {
+    private final BucketProperties bucketProperties;
+    @Bean(name = "s3")
+    @Primary
+    public AmazonS3 s3() {
         AmazonS3 s3 = AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(
-                        new BasicAWSCredentials(BucketProperties.ACCESS_KEY_ID,
-                                BucketProperties.SECRET_ACCESS_KEY)))
+                        new BasicAWSCredentials(bucketProperties.getAccessKeyId(),
+                                bucketProperties.getSecretAccessKey())))
                 .withEndpointConfiguration(
                         new AmazonS3ClientBuilder.EndpointConfiguration(
-                                BucketProperties.STORAGE_PATH,
+                                bucketProperties.getStoragePath(),
                                 "ru-central1"
                         )
                 )

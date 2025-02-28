@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postsDB
+    url: jdbc:postgresql://localhost:5432/imagedb
     username: root
     password: pass
     platform: postgres

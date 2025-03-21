@@ -20,3 +20,6 @@ bucket:
     access-key-id: ""
     secret-access-key: ""
     storage-path: "https://storage.yandexcloud.net/"
+
+jwt:
+  secret: secretkeyPasswordForAuth12312312312313213123123sdfsdf

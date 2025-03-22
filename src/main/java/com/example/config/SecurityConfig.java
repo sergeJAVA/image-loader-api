@@ -1,7 +1,7 @@
 package com.example.config;
 
 import com.example.config.security.JwtPerRequestFilter;
-import com.example.image_loader_api.service.security.JwtService;
+import com.example.image_loader_api.service.security.JWTService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtService jwtService;
+    private final JWTService jwtService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{

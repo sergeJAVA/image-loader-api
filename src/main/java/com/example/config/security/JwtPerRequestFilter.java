@@ -1,6 +1,6 @@
 package com.example.config.security;
 
-import com.example.image_loader_api.service.security.JwtService;
+import com.example.image_loader_api.service.security.JWTService;
 import com.example.image_loader_api.service.security.TokenUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class JwtPerRequestFilter extends OncePerRequestFilter {
 
-    private final JwtService jwtService;
+    private final JWTService jwtService;
 
     @Override
     protected void doFilterInternal(

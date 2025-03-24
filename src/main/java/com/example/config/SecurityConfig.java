@@ -1,6 +1,7 @@
 package com.example.config;
 
 import com.example.config.security.JwtPerRequestFilter;
+import com.example.config.security.TokenFilter;
 import com.example.image_loader_api.service.security.JWTService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JWTService jwtService;
+    private final TokenFilter tokenFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -36,6 +38,7 @@ public class SecurityConfig {
                         headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .exceptionHandling(exceptionHandlingConfigurer ->
                         exceptionHandlingConfigurer.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtPerRequestFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

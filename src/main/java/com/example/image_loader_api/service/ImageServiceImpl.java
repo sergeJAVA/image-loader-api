@@ -19,9 +19,10 @@ public class ImageServiceImpl implements ImageService {
 
     @SneakyThrows
     @Override
-    public Image uploadImage(MultipartFile file, String userId) {
+    public Image uploadImage(MultipartFile file, String userId, String name) {
         return fileRepository.save(Image.builder()
                 .downloadPath(cloudService.upload(file))
+                .name(name)
                 .userId(userId)
                 .build());
     }
@@ -37,5 +38,14 @@ public class ImageServiceImpl implements ImageService {
         String imageURL = bucketProperties.getStoragePath() + key;
         cloudService.deleteImage(key);
         fileRepository.deleteByDownloadPath(imageURL);
+    }
+
+    @Override
+    @Transactional
+    public void deleteImageByUserIdAndName(String userId, String name) {
+        Image image = fileRepository.findByUserIdAndName(userId, name);
+        String key = image.getDownloadPath().substring(bucketProperties.getStoragePath().length());
+        fileRepository.deleteByUserIdAndName(userId, name);
+        cloudService.deleteImage(key);
     }
 }

@@ -28,8 +28,8 @@ public class ImageController {
 
 
     @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Image uploadImage(@RequestBody MultipartFile file, @RequestParam String userId) {
-        return imageService.uploadImage(file, userId);
+    public Image uploadImage(@RequestBody MultipartFile file, @RequestParam String userId, @RequestParam String title) {
+        return imageService.uploadImage(file, userId, title);
     }
 
     @GetMapping
@@ -40,5 +40,11 @@ public class ImageController {
     @DeleteMapping("/delete")
     public void deleteImage(@RequestParam String key) {
         imageService.deleteImage(key);
+    }
+
+    @DeleteMapping("/delete/image")
+    public void deleteImage(@RequestParam("userId") String userId,
+                            @RequestParam("name") String name) {
+        imageService.deleteImageByUserIdAndName(userId, name);
     }
 }

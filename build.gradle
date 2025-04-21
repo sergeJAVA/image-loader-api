@@ -54,6 +54,8 @@ dependencies {
 	//Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	implementation 'org.springframework:spring-test:5.3.32'
 }
 
 tasks.named('test') {

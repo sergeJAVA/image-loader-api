@@ -9,6 +9,9 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
@@ -47,5 +50,13 @@ public class ImageServiceImpl implements ImageService {
         String key = image.getDownloadPath().substring(bucketProperties.getStoragePath().length());
         fileRepository.deleteByUserIdAndName(userId, name);
         cloudService.deleteImage(key);
+    }
+
+    public MultipartFile getImageByUserIdAndName(String userId, String name) throws IOException {
+        Image image = fileRepository.findByUserIdAndName(userId, name);
+        if (Optional.ofNullable(image).isPresent()) {
+            return cloudService.download(image.getDownloadPath());
+        }
+        return null;
     }
 }

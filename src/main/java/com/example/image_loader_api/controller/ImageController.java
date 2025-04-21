@@ -33,12 +33,12 @@ public class ImageController {
 
 
     @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Image uploadImage(@RequestBody MultipartFile file, @RequestParam String userId, @RequestParam String title) {
-        return imageService.uploadImage(file, userId, title);
+    public Image uploadImage(@RequestBody MultipartFile file, @RequestParam String userId, @RequestParam String title, String postId) {
+        return imageService.uploadImage(file, userId, title, postId);
     }
 
     @GetMapping("/download/{name}")
-    public ResponseEntity<byte[]> downloadFile(@CookieValue("token") String token, @PathVariable String name) {
+    public ResponseEntity<byte[]> downloadFileByToken(@CookieValue("token") String token, @PathVariable String name) {
         try {
             MultipartFile file = imageService.getImageByUserIdAndName(jwtService.getUserIdFromToken(token).toString(), name);
             if (file == null) {
@@ -50,8 +50,21 @@ public class ImageController {
         }
     }
 
-    @GetMapping
-    public Image findImageById(String id) {
+    @GetMapping("/download/{name}/{postId}")
+    public ResponseEntity<byte[]> downloadFileEveryone(@PathVariable String name, @PathVariable String postId) {
+        try {
+            MultipartFile file = imageService.getImageByNameAndPostId(name, postId);
+            if (file == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            return ResponseEntity.ok(file.getBytes());
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public Image findImageById(@PathVariable Long id) {
         return imageService.findImageById(id);
     }
 

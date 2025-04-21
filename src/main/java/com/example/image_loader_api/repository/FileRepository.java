@@ -5,8 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FileRepository extends JpaRepository<Image, String> {
+public interface FileRepository extends JpaRepository<Image, Long> {
     void deleteByDownloadPath(String downloadPath);
     void deleteByUserIdAndName(String userId, String name);
     Image findByUserIdAndName(String userId, String name);
+    Image findByNameAndPostId(String name, String postId);
 }

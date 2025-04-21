@@ -22,16 +22,17 @@ public class ImageServiceImpl implements ImageService {
 
     @SneakyThrows
     @Override
-    public Image uploadImage(MultipartFile file, String userId, String name) {
+    public Image uploadImage(MultipartFile file, String userId, String name, String postId) {
         return fileRepository.save(Image.builder()
                 .downloadPath(cloudService.upload(file))
                 .name(name)
                 .userId(userId)
+                .postId(postId)
                 .build());
     }
 
     @Override
-    public Image findImageById(String id) {
+    public Image findImageById(Long id) {
         return fileRepository.findById(id).orElseThrow(() -> new RuntimeException("File not found"));
     }
 
@@ -54,6 +55,14 @@ public class ImageServiceImpl implements ImageService {
 
     public MultipartFile getImageByUserIdAndName(String userId, String name) throws IOException {
         Image image = fileRepository.findByUserIdAndName(userId, name);
+        if (Optional.ofNullable(image).isPresent()) {
+            return cloudService.download(image.getDownloadPath());
+        }
+        return null;
+    }
+
+    public MultipartFile getImageByNameAndPostId(String name, String postId) throws IOException{
+        Image image = fileRepository.findByNameAndPostId(name, postId);
         if (Optional.ofNullable(image).isPresent()) {
             return cloudService.download(image.getDownloadPath());
         }

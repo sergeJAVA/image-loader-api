@@ -18,5 +18,6 @@ public class Image {
     private String userId;
     private String downloadPath;
     private String name;
+    private String postId;
 
 }

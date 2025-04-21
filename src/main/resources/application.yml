@@ -17,9 +17,9 @@ spring:
 
 bucket:
   properties:
-    name: ""
-    access-key-id: ""
-    secret-access-key: ""
+    name: " "
+    access-key-id: " "
+    secret-access-key: " "
     storage-path: "https://storage.yandexcloud.net/"
 
 jwt:

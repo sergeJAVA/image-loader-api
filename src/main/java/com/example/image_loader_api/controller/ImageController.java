@@ -43,6 +43,7 @@ public class ImageController {
     @PostMapping(path = "/upload/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadAvatar(@RequestBody MultipartFile file, @CookieValue("token") String token) {
         try {
+            avatarService.deleteAllByUserId(jwtService.getUserIdFromToken(token).toString());
             avatarService.save(jwtService.getUserIdFromToken(token).toString(), file);
             return ResponseEntity.ok("The avatar uploaded successfully!");
         }catch (Exception e) {

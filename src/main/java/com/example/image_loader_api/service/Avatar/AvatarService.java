@@ -12,4 +12,5 @@ public interface AvatarService {
     Avatar update(String userId, Avatar updatedAvatar);
     Avatar findByUserId(String userId);
     MultipartFile getAvatarByUserId(String userId) throws IOException;
+    void deleteAllByUserId(String userId);
 }

@@ -1,13 +1,16 @@
 package com.example.image_loader_api.service.Avatar;
 
+import com.amazonaws.services.dynamodbv2.xspec.L;
 import com.example.image_loader_api.model.Avatar;
 import com.example.image_loader_api.repository.AvatarRepository;
 import com.example.image_loader_api.service.CloudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -59,5 +62,19 @@ public class AvatarServiceImpl implements AvatarService {
             return cloudService.download(avatar.get().getDownloadPath());
         }
         return null;
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllByUserId(String userId) {
+        List<Avatar> avatars = avatarRepository.findAllByUserId(userId);
+        if (!avatars.isEmpty()) {
+            avatars.forEach(avatar -> {
+                String key = avatar.getDownloadPath();
+                key = key.substring(key.lastIndexOf("/") + 1);
+                cloudService.deleteImage(key);
+            });
+        }
+        avatarRepository.deleteAllByUserId(userId);
     }
 }

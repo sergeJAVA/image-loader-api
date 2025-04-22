@@ -1,4 +1,4 @@
-package com.example.image_loader_api.service;
+package com.example.image_loader_api.service.Image;
 
 import com.example.image_loader_api.model.Image;
 import org.springframework.web.multipart.MultipartFile;

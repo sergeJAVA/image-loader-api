@@ -1,8 +1,9 @@
-package com.example.image_loader_api.service;
+package com.example.image_loader_api.service.Image;
 
 import com.example.config.BucketProperties;
 import com.example.image_loader_api.model.Image;
 import com.example.image_loader_api.repository.FileRepository;
+import com.example.image_loader_api.service.CloudService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

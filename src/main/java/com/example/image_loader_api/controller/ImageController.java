@@ -1,8 +1,10 @@
 package com.example.image_loader_api.controller;
 
+import com.example.image_loader_api.model.Avatar;
 import com.example.image_loader_api.model.Image;
 import com.example.image_loader_api.repository.FileRepository;
-import com.example.image_loader_api.service.ImageService;
+import com.example.image_loader_api.service.Avatar.AvatarService;
+import com.example.image_loader_api.service.Image.ImageService;
 import com.example.image_loader_api.service.security.JWTService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import java.util.List;
 public class ImageController {
 
     private final ImageService imageService;
+    private final AvatarService avatarService;
 
     private final FileRepository fileRepository;
     private final JWTService jwtService;
@@ -35,6 +38,37 @@ public class ImageController {
     @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Image uploadImage(@RequestBody MultipartFile file, @RequestParam String userId, @RequestParam String title, String postId) {
         return imageService.uploadImage(file, userId, title, postId);
+    }
+
+    @PostMapping(path = "/upload/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> uploadAvatar(@RequestBody MultipartFile file, @CookieValue("token") String token) {
+        try {
+            avatarService.save(jwtService.getUserIdFromToken(token).toString(), file);
+            return ResponseEntity.ok("The avatar uploaded successfully!");
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Failed to upload avatar!");
+        }
+    }
+
+    @GetMapping("/download/avatar")
+    public ResponseEntity<byte[]> downloadAvatar(@CookieValue("token") String token) {
+        try {
+            MultipartFile avatarFile = avatarService.getAvatarByUserId(jwtService.getUserIdFromToken(token).toString());
+            if (avatarFile == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            return ResponseEntity.ok(avatarFile.getBytes());
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
+    }
+    @GetMapping("/avatar")
+    public ResponseEntity<Avatar> findAvatarByUserId(@CookieValue("token") String token) {
+        Avatar avatar = avatarService.findByUserId(jwtService.getUserIdFromToken(token).toString());
+        if (avatar != null) {
+            return ResponseEntity.ok(avatar);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @GetMapping("/download/{name}")

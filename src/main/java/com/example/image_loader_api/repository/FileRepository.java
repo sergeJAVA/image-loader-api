@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface FileRepository extends JpaRepository<Image, Long> {
     void deleteByDownloadPath(String downloadPath);
     void deleteByUserIdAndName(String userId, String name);
+    void deleteByPostId(String postId);
     Image findByUserIdAndName(String userId, String name);
     Image findByNameAndPostId(String name, String postId);
+    Image findByPostId(String postId);
 }

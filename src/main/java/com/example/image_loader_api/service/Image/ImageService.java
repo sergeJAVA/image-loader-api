@@ -12,6 +12,7 @@ public interface ImageService {
 
     void deleteImage(String key);
     void deleteImageByUserIdAndName(String userId, String name);
+    void deleteImageByPostId(String postId);
     MultipartFile getImageByUserIdAndName(String userId, String name) throws IOException;
     MultipartFile getImageByNameAndPostId(String name, String postId) throws IOException;
 }

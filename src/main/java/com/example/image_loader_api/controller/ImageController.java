@@ -109,8 +109,7 @@ public class ImageController {
     }
 
     @DeleteMapping("/delete/image")
-    public void deleteImage(@RequestParam("userId") String userId,
-                            @RequestParam("name") String name) {
-        imageService.deleteImageByUserIdAndName(userId, name);
+    public void deleteImageWithPost(@RequestParam String postId) {
+        imageService.deleteImageByPostId(postId);
     }
 }

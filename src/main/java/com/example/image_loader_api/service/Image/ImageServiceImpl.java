@@ -4,10 +4,10 @@ import com.example.config.BucketProperties;
 import com.example.image_loader_api.model.Image;
 import com.example.image_loader_api.repository.FileRepository;
 import com.example.image_loader_api.service.CloudService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -51,6 +51,15 @@ public class ImageServiceImpl implements ImageService {
         Image image = fileRepository.findByUserIdAndName(userId, name);
         String key = image.getDownloadPath().substring(bucketProperties.getStoragePath().length());
         fileRepository.deleteByUserIdAndName(userId, name);
+        cloudService.deleteImage(key);
+    }
+
+    @Override
+    @Transactional
+    public void deleteImageByPostId(String postId) {
+        Image image = fileRepository.findByPostId(postId);
+        String key = image.getDownloadPath().substring(bucketProperties.getStoragePath().length());
+        fileRepository.deleteByPostId(image.getPostId());
         cloudService.deleteImage(key);
     }
 
